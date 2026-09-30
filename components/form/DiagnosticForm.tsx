@@ -14,13 +14,13 @@ export function DiagnosticForm({ onSuccessClose, isModal = false }: DiagnosticFo
     name: "",
     email: "",
     company: "",
-    role: FORM_OPTIONS.roles[0],
-    employees: FORM_OPTIONS.employeeBrackets[1],
-    dailyTrips: FORM_OPTIONS.dailyTrips[1],
-    vendorCount: FORM_OPTIONS.vendorCounts[1],
-    etms: FORM_OPTIONS.etmsOptions[0],
+    role: "",
+    employees: "",
+    dailyTrips: "",
+    vendorCount: "",
+    etms: "",
     biggestChallenge: "",
-    shareData: FORM_OPTIONS.dataSharing[0],
+    shareData: "yes",
   });
 
   const [loading, setLoading] = useState(false);
@@ -66,32 +66,32 @@ export function DiagnosticForm({ onSuccessClose, isModal = false }: DiagnosticFo
 
   if (success) {
     return (
-      <div className="bg-white rounded-2xl border border-teal-200 p-8 sm:p-10 text-center shadow-sm">
-        <div className="w-14 h-14 bg-teal-50 border border-teal-200 text-teal-700 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="bg-[#0a0a0a] rounded-[22px] border border-[rgba(47,229,131,0.35)] p-8 sm:p-10 text-center shadow-[0_0_50px_rgba(47,229,131,0.08)]">
+        <div className="w-14 h-14 bg-[rgba(47,229,131,0.10)] border border-[rgba(47,229,131,0.35)] text-[#2fe583] rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(47,229,131,0.2)]">
           <CheckCircle2 className="w-8 h-8" />
         </div>
-        <div className="text-xs font-mono font-medium text-teal-700 uppercase tracking-wider mb-1">
+        <div className="text-xs font-mono font-medium text-[#2fe583] uppercase tracking-wider mb-1">
           Submission Confirmed • Ref: {refId}
         </div>
-        <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">
+        <h3 className="text-2xl font-bold text-[#f5f6f7] tracking-tight mb-2">
           Diagnostic Evaluation Initiated
         </h3>
-        <p className="text-sm text-slate-600 max-w-lg mx-auto leading-relaxed mb-6">
-          Thank you for sharing your mobility footprint. A Velora operational analyst will review your profile to prepare a preliminary Mobility Efficiency Diagnostic assessment.
+        <p className="text-sm text-[#9aa0a6] max-w-lg mx-auto leading-relaxed mb-6">
+          Thank you for submitting your enterprise mobility parameters. A member of the Velora operational analysis team will review your profile to prepare your preliminary Mobility Efficiency Diagnostic.
         </p>
 
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-600 max-w-md mx-auto text-left mb-6 space-y-1.5 font-mono">
+        <div className="bg-[#050605] border border-[#1e2022] rounded-xl p-4 text-xs text-[#9aa0a6] max-w-md mx-auto text-left mb-6 space-y-1.5 font-mono">
           <div className="flex justify-between">
-            <span className="text-slate-400">Enterprise:</span>
-            <span className="text-slate-800 font-semibold">{formData.company}</span>
+            <span className="text-[#6b7075]">Enterprise:</span>
+            <span className="text-[#f5f6f7] font-semibold">{formData.company}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Contact:</span>
-            <span className="text-slate-800 font-semibold">{formData.email}</span>
+            <span className="text-[#6b7075]">Contact:</span>
+            <span className="text-[#f5f6f7] font-semibold">{formData.email}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-slate-400">Data Sharing:</span>
-            <span className="text-slate-800 font-semibold truncate max-w-[200px]">{formData.shareData}</span>
+            <span className="text-[#6b7075]">Data Sharing:</span>
+            <span className="text-[#2fe583] font-semibold uppercase">{formData.shareData}</span>
           </div>
         </div>
 
@@ -100,7 +100,7 @@ export function DiagnosticForm({ onSuccessClose, isModal = false }: DiagnosticFo
             <button
               onClick={onSuccessClose}
               type="button"
-              className="px-6 py-2.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-slate-800 transition-colors"
+              className="btn-green-gradient px-6 py-2.5 rounded-full text-xs font-bold"
             >
               Done
             </button>
@@ -108,7 +108,7 @@ export function DiagnosticForm({ onSuccessClose, isModal = false }: DiagnosticFo
             <button
               onClick={() => setSuccess(false)}
               type="button"
-              className="px-6 py-2.5 rounded-lg border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition-colors"
+              className="px-6 py-2.5 rounded-full border border-[#1e2022] hover:border-[#2fe583] text-[#f5f6f7] text-xs font-semibold transition-colors"
             >
               Submit Another Inquiry
             </button>
@@ -121,242 +121,215 @@ export function DiagnosticForm({ onSuccessClose, isModal = false }: DiagnosticFo
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 relative overflow-hidden text-left"
+      className="bg-[#0a0a0a] rounded-[22px] border border-[#1e2022] p-7 sm:p-9 text-left relative overflow-hidden shadow-2xl"
     >
-      <div className="mb-8 border-b border-slate-100 pb-5">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-mono font-semibold tracking-wider uppercase text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
-            Enterprise Qualification
-          </span>
-          <span className="text-xs text-slate-400 font-mono">Confidential Review</span>
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
-          Request a Mobility Efficiency Diagnostic
-        </h3>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-          Provide your transport parameters below to evaluate cost leakage, capacity optimization, and vendor SLA performance.
-        </p>
-      </div>
-
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2.5">
-          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
+        <div className="mb-6 p-4 rounded-xl bg-[rgba(244,63,94,0.12)] border border-[rgba(244,63,94,0.3)] text-[#fb7185] text-xs flex items-start gap-2.5 font-mono">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
           <div>{error}</div>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {/* Field 1: Full Name */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="name">
-            Full Name <span className="text-teal-600">*</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4.5">
+        {/* Field 1: Name */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-name">
+            Name
           </label>
           <input
-            id="name"
+            id="f-name"
             name="name"
             type="text"
             required
             value={formData.name}
             onChange={handleChange}
             placeholder="e.g. Sridhar Ramanathan"
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 placeholder:text-slate-400 transition"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
           />
         </div>
 
-        {/* Field 2: Work Email */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="email">
-            Work Email <span className="text-teal-600">*</span>
+        {/* Field 2: Email */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-email">
+            Work email
           </label>
           <input
-            id="email"
+            id="f-email"
             name="email"
             type="email"
             required
             value={formData.email}
             onChange={handleChange}
             placeholder="name@company.com"
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 placeholder:text-slate-400 transition"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
           />
         </div>
 
         {/* Field 3: Company */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="company">
-            Company / Enterprise Name <span className="text-teal-600">*</span>
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-company">
+            Company
           </label>
           <input
-            id="company"
+            id="f-company"
             name="company"
             type="text"
             required
             value={formData.company}
             onChange={handleChange}
             placeholder="e.g. Wipro Enterprises"
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 placeholder:text-slate-400 transition"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
           />
         </div>
 
         {/* Field 4: Role */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="role">
-            Primary Role / Function <span className="text-teal-600">*</span>
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-role">
+            Role
           </label>
-          <select
-            id="role"
+          <input
+            id="f-role"
             name="role"
+            type="text"
+            required
             value={formData.role}
             onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.roles.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. Head of Transport"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
+          />
         </div>
 
-        {/* Field 5: Approx Employees Using Transport */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="employees">
-            Approx. Employees Using Transport
+        {/* Field 5: Approx Employees */}
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-employees">
+            Approx. employees using transport
           </label>
-          <select
-            id="employees"
+          <input
+            id="f-employees"
             name="employees"
+            type="text"
             value={formData.employees}
             onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.employeeBrackets.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. 1,200"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
+          />
         </div>
 
         {/* Field 6: Approx Daily Trips */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="dailyTrips">
-            Approx. Daily Trips
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-trips">
+            Approx. daily trips
           </label>
-          <select
-            id="dailyTrips"
+          <input
+            id="f-trips"
             name="dailyTrips"
+            type="text"
             value={formData.dailyTrips}
             onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.dailyTrips.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. 900"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
+          />
         </div>
 
         {/* Field 7: Number of Vendors */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="vendorCount">
-            Number of Active Vendors (FSPs)
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-vendors">
+            Number of vendors
           </label>
-          <select
-            id="vendorCount"
+          <input
+            id="f-vendors"
             name="vendorCount"
+            type="text"
             value={formData.vendorCount}
             onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.vendorCounts.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. 3"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
+          />
         </div>
 
         {/* Field 8: Current ETMS */}
-        <div>
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="etms">
-            Current ETMS / Operational Tool
+        <div className="flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-etms">
+            Current ETMS
           </label>
-          <select
-            id="etms"
+          <input
+            id="f-etms"
             name="etms"
+            type="text"
             value={formData.etms}
             onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.etmsOptions.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. MoveInSync"
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40]"
+          />
         </div>
 
-        {/* Field 9: Biggest Mobility Challenge */}
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="biggestChallenge">
-            Biggest Mobility Challenge or Cost Concern
+        {/* Field 9: Biggest Challenge (Full Width) */}
+        <div className="sm:col-span-2 flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]" htmlFor="f-challenge">
+            Biggest mobility challenge
           </label>
           <textarea
-            id="biggestChallenge"
+            id="f-challenge"
             name="biggestChallenge"
             rows={3}
             value={formData.biggestChallenge}
             onChange={handleChange}
-            placeholder="e.g. Unexplained invoice mileage inflation, high failure rates during night shifts, or excessive empty 26-seater runs..."
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 placeholder:text-slate-400 transition"
+            placeholder="e.g. Unexplained invoice mileage inflation, high failure rates during night shifts..."
+            className="bg-[#050505] border border-[#1e2022] rounded-[10px] text-[#f5f6f7] p-3 text-[14px] outline-none focus:border-[#2fe583] transition-colors placeholder:text-[#3a3d40] resize-y min-h-[78px]"
           />
         </div>
 
-        {/* Field 10: Willing to Share Anonymized Data */}
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-slate-700 mb-1.5" htmlFor="shareData">
-            Willingness to Share Anonymized Historical Data for Diagnostic Evaluation?
+        {/* Field 10: Radio Row (Full Width) */}
+        <div className="sm:col-span-2 flex flex-col gap-2">
+          <label className="text-[12px] font-semibold text-[#6b7075]">
+            Interested in sharing anonymized historical data?
           </label>
-          <select
-            id="shareData"
-            name="shareData"
-            value={formData.shareData}
-            onChange={handleChange}
-            className="w-full text-xs px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-teal-600 focus:ring-1 focus:ring-teal-600 text-slate-900 bg-white transition"
-          >
-            {FORM_OPTIONS.dataSharing.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-          <p className="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1.5">
-            <Lock className="w-3 h-3 text-slate-400" />
-            Enterprise confidentiality strictly maintained under standard mutual non-disclosure agreement.
-          </p>
+          <div className="flex gap-5 pt-1">
+            <label className="flex items-center gap-2 text-[13.5px] text-[#f5f6f7] cursor-pointer">
+              <input
+                type="radio"
+                name="shareData"
+                value="yes"
+                checked={formData.shareData === "yes"}
+                onChange={handleChange}
+                className="accent-[#2fe583]"
+              />
+              <span>Yes</span>
+            </label>
+            <label className="flex items-center gap-2 text-[13.5px] text-[#f5f6f7] cursor-pointer">
+              <input
+                type="radio"
+                name="shareData"
+                value="no"
+                checked={formData.shareData === "no"}
+                onChange={handleChange}
+                className="accent-[#2fe583]"
+              />
+              <span>No</span>
+            </label>
+          </div>
         </div>
       </div>
 
-      <div className="mt-8 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <ShieldCheck className="w-4 h-4 text-teal-600" />
-          <span>Vendor-neutral, secure enterprise diagnostic</span>
-        </div>
+      {/* Submit Row from Reference */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-7 pt-6 border-t border-[#161717]">
+        <span className="text-[12px] text-[#6b7075] max-w-[32ch] leading-relaxed">
+          We read every response ourselves. No automated follow-up, no spam.
+        </span>
 
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold tracking-wide transition shadow-sm disabled:opacity-50"
+          className="btn-green-gradient inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full text-[13.5px] font-bold shadow-lg disabled:opacity-50 cursor-pointer"
         >
           {loading ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span>Analyzing Parameters...</span>
+              <Loader2 className="w-4 h-4 animate-spin text-[#06170d]" />
+              <span>Submitting...</span>
             </>
           ) : (
             <>
-              <span>Get a Mobility Diagnostic</span>
+              <span>Request diagnostic</span>
               <ArrowRight className="w-4 h-4" />
             </>
           )}

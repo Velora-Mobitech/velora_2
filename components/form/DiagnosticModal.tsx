@@ -41,21 +41,23 @@ export function DiagnosticModal({ isOpen, onClose }: DiagnosticModalProps) {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-black/75 backdrop-blur-md transition-opacity"
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-3xl my-8 z-10">
+      <div className="relative w-full max-w-2xl my-8 z-10">
         <button
           onClick={onClose}
           type="button"
           aria-label="Close modal"
-          className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition"
+          className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-[#161717] hover:bg-[#2c2f31] text-[#9aa0a6] hover:text-white flex items-center justify-center transition border border-[#1e2022]"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <DiagnosticForm isModal onSuccessClose={onClose} />
+        <div className="border border-[rgba(47,229,131,0.35)] rounded-[22px] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] overflow-hidden">
+          <DiagnosticForm isModal onSuccessClose={onClose} />
+        </div>
       </div>
     </div>
   );

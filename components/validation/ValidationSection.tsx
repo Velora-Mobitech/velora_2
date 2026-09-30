@@ -1,131 +1,92 @@
 "use client";
 
 import React, { useState } from "react";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DiagnosticForm } from "@/components/form/DiagnosticForm";
-import { ShieldCheck, Users, Sparkles, MessageSquare, ArrowRight, CheckCircle2 } from "lucide-react";
+import { DiagnosticModal } from "@/components/form/DiagnosticModal";
+import { ArrowRight } from "lucide-react";
 
 export function ValidationSection() {
-  const [partnerMode, setPartnerMode] = useState<"diagnostic" | "feedback">("diagnostic");
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section id="validation" className="py-20 sm:py-28 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Validation Callout Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-teal-800 uppercase bg-teal-100/70 border border-teal-200 px-2.5 py-1 rounded-full">
-              13 • Design Partnership
-            </span>
-            <StatusBadge status="VALIDATING" size="sm" />
+    <>
+      {/* SECTION: GET A MOBILITY EFFICIENCY DIAGNOSTIC */}
+      <section id="validation" className="py-24 sm:py-32 bg-black border-b border-[#161717] relative">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          
+          {/* Head */}
+          <div className="text-center max-w-[680px] mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+              Get started
+            </div>
+            <h2 className="text-[28px] sm:text-[38px] lg:text-[42px] font-bold tracking-tight text-[#f5f6f7] leading-[1.15]">
+              Get a Mobility <span className="text-[#2fe583]">Efficiency Diagnostic</span>
+            </h2>
+            <p className="mt-4 text-[#9aa0a6] text-[16.5px] leading-relaxed">
+              Tell us about your mobility setup — a member of the Velora team will follow up directly to scope your diagnostic.
+            </p>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            Help us build the right intelligence layer.
-          </h2>
-
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed mb-6">
-            Velora is currently validating its mobility intelligence thesis with forward-thinking enterprise mobility teams. We&apos;re looking for organizations willing to share how mobility is managed today, evaluate anonymized historical data where possible, and help us test whether these insights lead to measurably better operational decisions.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 font-mono">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Strict Mutual Non-Disclosure</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Anonymized Data Ingestion</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-teal-600" />
-              <span>Tailored Diagnostic Report</span>
-            </div>
+          {/* Centered Calc-Card Form from Reference */}
+          <div className="max-w-[800px] mx-auto mb-6">
+            <DiagnosticForm />
           </div>
-        </div>
 
-        {/* Section 15 & 16: Final Diagnostic Application Container */}
-        <div id="diagnostic-form" className="scroll-mt-24">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                Section 14 • Mobility Efficiency Diagnostic
+          {/* Link Row from Reference */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[800px] mx-auto">
+            <a
+              href="mailto:partners@velora.com?subject=Design%20Partner%20interest"
+              className="bg-[#0a0a0a] border border-[#1e2022] hover:border-[#2c2f31] rounded-[14px] p-5 flex justify-between items-center transition-colors group"
+            >
+              <span className="text-[14px] font-semibold text-[#f5f6f7] group-hover:text-white transition-colors">
+                Become a Design Partner
               </span>
-              <h3 className="text-2xl font-bold tracking-tight text-slate-900">
-                Find out where your mobility operation is losing value.
-              </h3>
-            </div>
+              <span className="text-[#2fe583] font-bold text-base transition-transform group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </a>
+
+            <a
+              href="mailto:hello@velora.com?subject=What%20we're%20missing"
+              className="bg-[#0a0a0a] border border-[#1e2022] hover:border-[#2c2f31] rounded-[14px] p-5 flex justify-between items-center transition-colors group"
+            >
+              <span className="text-[14px] font-semibold text-[#f5f6f7] group-hover:text-white transition-colors">
+                Tell us what we&apos;re missing
+              </span>
+              <span className="text-[#2fe583] font-bold text-base transition-transform group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </a>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Diagnostic Form (10 Fields) */}
-            <div className="lg:col-span-8">
-              <DiagnosticForm />
-            </div>
+        </div>
+      </section>
 
-            {/* Right Information & Design Partner Panel */}
-            <div className="lg:col-span-4 space-y-6">
-              
-              {/* Partner Card */}
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center">
-                    <Users className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-slate-900">
-                      Become a Design Partner
-                    </h4>
-                    <span className="text-[10px] font-mono text-teal-700 uppercase">
-                      Cohorts Limited
-                    </span>
-                  </div>
-                </div>
+      {/* FINAL BAND FROM REFERENCE */}
+      <section className="py-20 sm:py-28 bg-black border-b border-[#161717]">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
+          <div className="max-w-[1180px] mx-auto bg-[#0a0a0a] border border-[#1e2022] rounded-[32px] p-12 sm:p-16 text-center relative overflow-hidden shadow-2xl">
+            {/* Radial top glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(600px_200px_at_50%_0%,rgba(47,229,131,0.12),transparent_70%)] pointer-events-none" />
 
-                <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                  Design Partners receive a complimentary deep-dive audit of their historical ETMS and billing feeds, custom constraint modeling, and direct access to Velora&apos;s product team.
-                </p>
+            <h2 className="text-[24px] sm:text-[34px] font-bold tracking-tight text-[#f5f6f7] mb-8 relative z-10">
+              Ready to see where your mobility budget is leaking?
+            </h2>
 
-                <div className="space-y-2 text-xs text-slate-500 font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                    <span>Cross-vendor rate audit</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                    <span>Dead km & capacity heatmap</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                    <span>Failure economics scorecard</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Data Confidentiality Promise */}
-              <div className="p-6 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <ShieldCheck className="w-4 h-4 text-teal-400" />
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-teal-400">
-                    Data Security & NDA
-                  </span>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed mb-3">
-                  We never store unencrypted PII. Employee identities, home addresses, and confidential vendor rates are hashed and scrubbed prior to algorithmic evaluation.
-                </p>
-                <div className="pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-400">
-                  Enterprise-grade governance
-                </div>
-              </div>
-
-            </div>
-
+            <button
+              onClick={() => setModalOpen(true)}
+              type="button"
+              className="btn-green-gradient inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-[14px] font-bold shadow-xl relative z-10 cursor-pointer"
+            >
+              <span>Get a Mobility Diagnostic</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <DiagnosticModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }

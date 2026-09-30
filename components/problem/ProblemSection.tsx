@@ -1,185 +1,144 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Database, 
-  HelpCircle, 
-  CheckCircle, 
-  Layers, 
-  ArrowRight,
-  TrendingDown,
-  Clock,
-  Coins,
-  ShieldAlert,
-  Sliders
-} from "lucide-react";
-import { FRAGMENTED_SOURCES, FIVE_KEY_QUESTIONS } from "@/lib/data";
+import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const QUESTION_ICONS = [
-  TrendingDown, // Route efficiency
-  Coins,        // Vendor true cost
-  Layers,       // Unused capacity
-  ShieldAlert,  // Cost of failure
-  Sliders,      // Measurable savings
+const QUESTIONS = [
+  {
+    idx: "01",
+    question: "Which routes are inefficient?",
+    context: "Most ETMS run static routing templates where parallel corridors run half-empty.",
+    insight: "Velora detects overlapping corridors with <35% seat occupancy and models merger windows without violating shift SLAs.",
+  },
+  {
+    idx: "02",
+    question: "Which vendors are actually costing us more?",
+    context: "A low base contract rate often conceals frequent breakdowns and emergency spot-ride surcharges.",
+    insight: "Velora computes the 'Effective Cost' per vendor — aggregating base contract fees with hidden failure penalties.",
+  },
+  {
+    idx: "03",
+    question: "Where are we paying for unused capacity?",
+    context: "Enterprises frequently pay fixed monthly guarantees for 26-seater tempo travellers running with 7 passengers.",
+    insight: "Velora maps historical demand curves against contracted fleet size to expose dead kilometers and surplus vehicle slots.",
+  },
+  {
+    idx: "04",
+    question: "What do failures really cost?",
+    context: "When a driver doesn't show up, paying for an emergency replacement cab is only the tip of the iceberg.",
+    insight: "Velora quantifies compound economic friction: spot ride surcharges, shift worker waiting delay, and transport desk escalations.",
+  },
+  {
+    idx: "05",
+    question: "Which changes would create measurable savings?",
+    context: "Dashboards show averages, but transport managers cannot easily verify which contract terms to renegotiate.",
+    insight: "Velora converts diagnostic data into ranked, constraint-aware operational interventions backed by auditable evidence.",
+  },
+  {
+    idx: "06",
+    question: "Where is invoice leakage actually happening?",
+    context: "Invoices are approved with basic batch checks, missing duplicate trip logs and inflated detour mileage.",
+    insight: "Velora reconciles GPS telemetry traces against RFID security gate scans and rate card contracts to catch billing discrepancies.",
+  },
+];
+
+const CHIPS = [
+  "ETMS",
+  "GPS",
+  "Vendors",
+  "Invoices",
+  "Contracts",
+  "HR systems",
+  "Rosters",
+  "Finance systems",
 ];
 
 export function ProblemSection() {
-  const [selectedQuestion, setSelectedQuestion] = useState(0);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(0);
 
   return (
-    <section id="problem" className="py-20 sm:py-28 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="problem" className="py-24 sm:py-32 bg-black border-b border-[#161717] relative">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase mb-3">
-            02 • The Data Fragmentation Dilemma
+        {/* Head */}
+        <div className="text-center max-w-[680px] mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+            The problem
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            Your mobility data knows the answer. It&apos;s just scattered everywhere.
+          <h2 className="text-[28px] sm:text-[38px] lg:text-[42px] font-bold tracking-tight text-[#f5f6f7] leading-[1.15]">
+            Transportation isn&apos;t broken. <span className="text-[#2fe583]">It&apos;s unmeasured.</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Enterprise transport operations generate millions of telemetry points, trip logs, and invoices each month. But because this data lives in disconnected operational silos, transport leaders are left answering critical economic questions with guesswork.
+          <p className="mt-4 text-[#9aa0a6] text-[16.5px] leading-relaxed">
+            Every enterprise running employee mobility is already sitting on the answers — spread across systems that don&apos;t talk to each other.
           </p>
         </div>
 
-        {/* 8 Fragmented Silos Matrix */}
-        <div className="mb-20">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono font-medium text-slate-400 uppercase tracking-wider">
-              Disconnected Systems of Record
-            </span>
-            <span className="text-xs text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded font-mono">
-              Unreconciled Silos
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-            {FRAGMENTED_SOURCES.map((source, idx) => (
+        {/* 6 Questions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[960px] mx-auto mb-10">
+          {QUESTIONS.map((item, idx) => {
+            const isSelected = selectedIdx === idx;
+            return (
               <div
-                key={idx}
-                className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/90 hover:border-slate-300 transition-colors"
+                key={item.idx}
+                onClick={() => setSelectedIdx(isSelected ? null : idx)}
+                className={cn(
+                  "bg-[#0a0a0a] border rounded-[14px] p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 cursor-pointer group",
+                  isSelected
+                    ? "border-[rgba(47,229,131,0.5)] bg-[#0c0d0d] shadow-[0_0_25px_rgba(47,229,131,0.08)]"
+                    : "border-[#1e2022] hover:border-[#2c2f31]"
+                )}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-slate-900 font-mono">
-                    {source.name}
+                <div className="flex items-start gap-4">
+                  <span className="font-mono text-xs font-bold text-[#2fe583] pt-0.5">
+                    {item.idx}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-500 uppercase px-1.5 py-0.5 rounded bg-white border border-slate-200">
-                    {source.tag}
-                  </span>
+                  <div className="flex-1">
+                    <p className="text-[15.5px] text-[#f5f6f7] font-medium group-hover:text-white transition-colors">
+                      {item.question}
+                    </p>
+                  </div>
+                  <ArrowRight
+                    className={cn(
+                      "w-4 h-4 transition-transform shrink-0",
+                      isSelected ? "text-[#2fe583] rotate-90" : "text-[#6b7075] group-hover:text-[#9aa0a6]"
+                    )}
+                  />
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  {source.desc}
-                </p>
+
+                {/* Expanded Diagnostic Insight */}
+                {isSelected && (
+                  <div className="mt-4 pt-4 border-t border-[#1e2022] space-y-2 text-xs">
+                    <div className="text-[#9aa0a6]">
+                      <span className="text-[#6b7075] uppercase font-mono text-[10px] block mb-0.5">Blindspot</span>
+                      {item.context}
+                    </div>
+                    <div className="p-3 rounded-lg bg-[#091510] border border-[rgba(47,229,131,0.25)] text-[#8fe6ba]">
+                      <span className="text-[#2fe583] uppercase font-mono text-[10px] font-semibold block mb-0.5">Velora Diagnostic</span>
+                      {item.insight}
+                    </div>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        {/* The 5 Critical Questions Stakeholders Cannot Answer */}
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/60 p-6 sm:p-10">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-teal-800 bg-teal-50 border border-teal-200 px-2.5 py-1 rounded-md mb-2">
-              <HelpCircle className="w-3.5 h-3.5 text-teal-600" />
-              Critical Operational Questions
-            </div>
-            <h3 className="text-2xl font-bold tracking-tight text-slate-900">
-              Five questions every transport and finance head asks — and struggles to answer
-            </h3>
+        {/* Chips Wrap */}
+        <div className="mt-10 text-center">
+          <div className="text-[12px] tracking-[0.08em] uppercase text-[#6b7075] font-semibold mb-4">
+            Fragmented across
           </div>
-
-          {/* Interactive Question Selector & Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Question List */}
-            <div className="lg:col-span-6 space-y-2">
-              {FIVE_KEY_QUESTIONS.map((item, idx) => {
-                const Icon = QUESTION_ICONS[idx] || HelpCircle;
-                const isCurrent = selectedQuestion === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedQuestion(idx)}
-                    type="button"
-                    className={cn(
-                      "w-full text-left p-4 rounded-xl border transition-all flex items-start gap-3.5",
-                      isCurrent
-                        ? "bg-white border-slate-900 shadow-sm"
-                        : "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border text-xs font-mono font-bold",
-                        isCurrent
-                          ? "bg-slate-900 text-white border-slate-900"
-                          : "bg-slate-100 text-slate-500 border-slate-200"
-                      )}
-                    >
-                      {item.number}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className={cn("text-sm font-semibold", isCurrent ? "text-slate-950" : "text-slate-700")}>
-                          {item.question}
-                        </h4>
-                        <ArrowRight
-                          className={cn(
-                            "w-4 h-4 transition-transform",
-                            isCurrent ? "text-teal-600 translate-x-1" : "text-slate-300"
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Right Question Detail Card */}
-            <div className="lg:col-span-6">
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs relative">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xs font-mono font-bold text-slate-400">
-                    DIAGNOSTIC FOCUS • {FIVE_KEY_QUESTIONS[selectedQuestion].number}
-                  </span>
-                </div>
-
-                <h4 className="text-xl font-bold text-slate-900 mb-4">
-                  {FIVE_KEY_QUESTIONS[selectedQuestion].question}
-                </h4>
-
-                <div className="space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-semibold block mb-1">
-                      Today&apos;s Blindspot
-                    </span>
-                    <p className="text-slate-700">
-                      {FIVE_KEY_QUESTIONS[selectedQuestion].context}
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-teal-50/70 border border-teal-200/80 text-teal-900">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-teal-700 font-semibold block mb-1">
-                      Velora Intelligence Approach
-                    </span>
-                    <p className="text-teal-950">
-                      {FIVE_KEY_QUESTIONS[selectedQuestion].insight}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border-t border-slate-100 pt-4 flex items-center justify-between text-xs text-slate-400 font-mono">
-                  <span>Independent Audit Engine</span>
-                  <a href="#decision-engine" className="text-teal-700 hover:text-teal-800 font-medium font-sans">
-                    View recommendation evidence &rarr;
-                  </a>
-                </div>
-              </div>
-            </div>
-
+          <div className="flex flex-wrap gap-2.5 justify-center max-w-[800px] mx-auto">
+            {CHIPS.map((chip) => (
+              <span
+                key={chip}
+                className="text-[12.5px] text-[#9aa0a6] border border-[#1e2022] hover:border-[#2a2a2a] hover:text-[#f5f6f7] px-4 py-2 rounded-full bg-[#0a0a0a] transition-colors font-medium select-none"
+              >
+                {chip}
+              </span>
+            ))}
           </div>
         </div>
 

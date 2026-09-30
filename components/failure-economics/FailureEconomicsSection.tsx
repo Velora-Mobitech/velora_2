@@ -1,155 +1,226 @@
 "use client";
 
 import React, { useState } from "react";
-import { AlertOctagon, ArrowRight, ShieldCheck, DollarSign, Clock, Users, FileWarning, HelpCircle } from "lucide-react";
+import { AlertOctagon, ArrowRight, ShieldCheck, DollarSign, Clock, Users, Sliders } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function FailureEconomicsSection() {
-  const [activeScenario, setActiveScenario] = useState<"standard" | "breakdown">("breakdown");
+  const [dailyTrips, setDailyTrips] = useState(800);
+  const [failureRate, setFailureRate] = useState(4.5); // %
+  const [spotMultiplier, setSpotMultiplier] = useState(2.6); // 2.6x normal cab rate
+
+  // Formula calculations
+  const monthlyTrips = dailyTrips * 24;
+  const failedTripsMonthly = Math.round((monthlyTrips * failureRate) / 100);
+  const baseTripCost = 340; // ₹
+  const spotTripCost = Math.round(baseTripCost * spotMultiplier);
+  const spotExcessMonthly = failedTripsMonthly * (spotTripCost - baseTripCost);
+  const escalationHoursMonthly = Math.round(failedTripsMonthly * 0.35); // ~20 mins intervention per breakdown
+  const annualExcessLakhs = ((spotExcessMonthly * 12) / 100000).toFixed(1);
 
   return (
-    <section id="failure-economics" className="py-20 sm:py-28 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="failure-economics" className="py-24 sm:py-32 bg-black border-b border-[#161717]">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
         
-        {/* Section Eyebrow & Title */}
-        <div className="max-w-3xl mb-16">
-          <div className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase mb-3">
-            06 • Economic Differentiation
+        {/* Head */}
+        <div className="text-center max-w-[680px] mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+            Failure economics
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            A failed trip costs more than the replacement ride.
+          <h2 className="text-[28px] sm:text-[38px] lg:text-[42px] font-bold tracking-tight text-[#f5f6f7] leading-[1.15]">
+            A failed trip costs more than the <br />
+            <span className="text-[#2fe583]">replacement ride.</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Most procurement evaluations look solely at the base contractual rate per trip. Velora introduces the <strong>Total Cost of Failure</strong> framework — quantifying the true compound financial drain when vendors cancel or break down.
+          <p className="mt-4 text-[#9aa0a6] text-[16.5px] leading-relaxed">
+            Most procurement teams evaluate vendors solely on baseline contractual rates. Velora quantifies the true compound financial drain when scheduled trips fail.
           </p>
         </div>
 
-        {/* Core Formula Banner */}
-        <div className="bg-slate-950 text-white rounded-2xl p-6 sm:p-8 mb-12 border border-slate-800 font-mono shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Core Formula Box */}
+        <div className="bg-[#091510] border border-[rgba(47,229,131,0.35)] rounded-[22px] p-6 sm:p-8 mb-12 shadow-[0_0_40px_rgba(47,229,131,0.06)] flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <span className="text-xs text-teal-400 uppercase tracking-widest block mb-1">
-              Velora Core Formula
+            <span className="text-[11px] font-mono uppercase tracking-[0.06em] text-[#2fe583] block mb-1">
+              Velora Principle
             </span>
-            <div className="text-lg sm:text-xl font-bold tracking-tight text-white">
-              Effective Vendor Cost = Base Contract Rate + Failure Economic Burden
+            <div className="text-lg sm:text-xl font-bold font-mono text-[#f5f6f7]">
+              Effective Cost = Contract Tariff + Compound Failure Burden
             </div>
-            <p className="text-xs text-slate-400 font-sans mt-1">
-              A ₹320 cab that fails 7% of the time often costs more than a ₹360 cab with 99.5% reliability.
+            <p className="text-xs text-[#9aa0a6] mt-1 max-w-xl">
+              A ₹320 cab that fails 7% of the time consistently costs more than a ₹360 cab with 99.5% shift arrival reliability.
             </p>
           </div>
-          <div className="shrink-0 px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-center">
-            <span className="text-[10px] text-slate-400 block uppercase">Vendor Comparison</span>
-            <span className="text-sm font-bold text-teal-400">Total Economic Exposure</span>
+
+          <div className="shrink-0 bg-[#050605] border border-[#1e2022] rounded-xl px-5 py-3 text-center">
+            <span className="text-[10px] font-mono text-[#6b7075] uppercase block">Benchmark</span>
+            <span className="text-sm font-bold font-mono text-[#2fe583]">+₹48 – ₹92 / trip gap</span>
           </div>
         </div>
 
-        {/* Division: Hard Monetary Cost vs Non-Monetized Risk */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+        {/* Interactive Failure Calculator */}
+        <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[22px] p-6 sm:p-8 mb-16">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-[#161717]">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#2fe583] flex items-center gap-2">
+              <Sliders className="w-3.5 h-3.5 text-[#2fe583]" />
+              Interactive Enterprise Failure Burden Simulator
+            </span>
+            <span className="text-xs text-[#9aa0a6] font-mono">Live Recalculation</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div>
+              <label className="block text-xs font-mono text-[#9aa0a6] mb-2">
+                Daily Trips ({dailyTrips})
+              </label>
+              <input
+                type="range"
+                min="200"
+                max="3000"
+                step="50"
+                value={dailyTrips}
+                onChange={(e) => setDailyTrips(Number(e.target.value))}
+                className="w-full accent-[#2fe583] bg-[#1e2022] rounded h-1.5 cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono text-[#9aa0a6] mb-2">
+                Vendor Failure / No-Show Rate ({failureRate}%)
+              </label>
+              <input
+                type="range"
+                min="1.0"
+                max="10.0"
+                step="0.5"
+                value={failureRate}
+                onChange={(e) => setFailureRate(Number(e.target.value))}
+                className="w-full accent-[#2fe583] bg-[#1e2022] rounded h-1.5 cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono text-[#9aa0a6] mb-2">
+                Emergency Spot Ride Surcharge ({spotMultiplier}x)
+              </label>
+              <input
+                type="range"
+                min="1.5"
+                max="4.0"
+                step="0.1"
+                value={spotMultiplier}
+                onChange={(e) => setSpotMultiplier(Number(e.target.value))}
+                className="w-full accent-[#2fe583] bg-[#1e2022] rounded h-1.5 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/* Results Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-[#050605] border border-[#1e2022] rounded-xl p-4">
+              <span className="text-[10px] font-mono uppercase text-[#6b7075] block">Failed Trips / Month</span>
+              <span className="text-2xl font-bold font-mono text-[#f5f6f7]">{failedTripsMonthly}</span>
+              <span className="text-[11px] text-[#9aa0a6] block mt-0.5">Unfulfilled bookings</span>
+            </div>
+
+            <div className="bg-[#050605] border border-[#1e2022] rounded-xl p-4">
+              <span className="text-[10px] font-mono uppercase text-[#6b7075] block">Spot Cab Premium</span>
+              <span className="text-2xl font-bold font-mono text-[#fb7185]">₹{spotTripCost - baseTripCost}</span>
+              <span className="text-[11px] text-[#9aa0a6] block mt-0.5">Surge above contract</span>
+            </div>
+
+            <div className="bg-[#050605] border border-[#1e2022] rounded-xl p-4">
+              <span className="text-[10px] font-mono uppercase text-[#6b7075] block">Intervention Hours</span>
+              <span className="text-2xl font-bold font-mono text-[#f5f6f7]">{escalationHoursMonthly} hrs</span>
+              <span className="text-[11px] text-[#9aa0a6] block mt-0.5">Transport team overhead</span>
+            </div>
+
+            <div className="bg-[#091510] border border-[rgba(47,229,131,0.35)] rounded-xl p-4 shadow-sm">
+              <span className="text-[10px] font-mono uppercase text-[#2fe583] block">Annual Surcharge Leakage</span>
+              <span className="text-2xl font-bold font-mono text-[#2fe583]">₹{annualExcessLakhs}L</span>
+              <span className="text-[11px] text-[#8fe6ba] block mt-0.5">Avoidable direct loss</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Split: Hard Monetary Cost vs Non-Monetized Risk */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
-          {/* Column 1: HARD MONETARY COST */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
-            <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+          {/* Hard Monetary Cost */}
+          <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[18px] p-6 sm:p-7">
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#161717]">
               <div>
-                <span className="text-xs font-mono font-bold text-rose-700 uppercase tracking-wider block">
-                  Audited Direct Loss
+                <span className="text-[11px] font-mono uppercase text-[#fb7185] font-bold block">
+                  Audited Ledger Loss
                 </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-0.5">
-                  Hard Monetary Cost
-                </h3>
+                <h3 className="text-lg font-bold text-[#f5f6f7]">Hard Monetary Cost</h3>
               </div>
-              <span className="text-xs font-mono bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-1 rounded-md">
+              <span className="text-[10.5px] font-mono bg-[rgba(244,63,94,0.12)] text-[#fb7185] border border-[rgba(244,63,94,0.3)] px-2 py-0.5 rounded">
                 Direct Financial Impact
               </span>
             </div>
 
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Emergency Spot Replacement Surcharges</span>
-                  <span className="font-mono text-rose-700">2.5x – 3x Tariff</span>
+            <ul className="space-y-3 text-xs text-[#9aa0a6] leading-relaxed">
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#fb7185] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">Emergency Spot Replacement Cabs (2.5x Tariff)</strong>
+                  Emergency app-hailing rides booked at surge rates when rostered drivers fail to report.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Spot-hailing cabs (Uber/Ola/local fleets) at surge rates when rostered drivers fail to arrive at campus or pickup nodes.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Contractual SLA Penalty Deductions</span>
-                  <span className="font-mono text-slate-700">₹200 – ₹500 / incident</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#fb7185] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">SLA Penalty Reconciliation Disputes</strong>
+                  Administrative time required to dispute, prove, and deduct contractual penalties in vendor settlements.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Time-consuming dispute reconciliation overhead where vendor deductions must be audited, argued, and recovered in billing cycles.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Guaranteed Minimum Fleet Surcharges</span>
-                  <span className="font-mono text-slate-700">Billed Even When Idle</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#fb7185] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">Guaranteed Minimum Idle Vehicle Billing</strong>
+                  Fixed monthly retainer payments billed for vehicles that remain parked with zero utilization.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Contracts with fixed monthly guarantees for leased tempo travellers regardless of actual vehicle readiness.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-              Auditable on general ledgers, bank transactions & ERP vendor settlements.
-            </div>
+              </li>
+            </ul>
           </div>
 
-          {/* Column 2: NON-MONETIZED OPERATIONAL RISK */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs">
-            <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+          {/* Non-Monetized Risk */}
+          <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[18px] p-6 sm:p-7">
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#161717]">
               <div>
-                <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider block">
-                  Operational Friction
+                <span className="text-[11px] font-mono uppercase text-[#2fe583] font-bold block">
+                  Operational Integrity
                 </span>
-                <h3 className="text-xl font-bold text-slate-900 mt-0.5">
-                  Non-Monetized Risk
-                </h3>
+                <h3 className="text-lg font-bold text-[#f5f6f7]">Non-Monetized Risk</h3>
               </div>
-              <span className="text-xs font-mono bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-md">
+              <span className="text-[10.5px] font-mono bg-[rgba(47,229,131,0.10)] text-[#2fe583] border border-[rgba(47,229,131,0.3)] px-2 py-0.5 rounded">
                 Disciplined Analysis
               </span>
             </div>
 
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Shift Worker Waiting Time & Delay</span>
-                  <span className="font-mono text-slate-700">Productivity Friction</span>
+            <ul className="space-y-3 text-xs text-[#9aa0a6] leading-relaxed">
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">Shift Arrival Friction & Production Delays</strong>
+                  Engineering or manufacturing handoffs stalled when late vehicles hold up incoming shifts.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Production lines and 24/7 service desk handoffs stalled when late vehicles delay incoming engineering and customer operations shifts.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Transport Desk Intervention Overhead</span>
-                  <span className="font-mono text-slate-700">140+ Hours / Month</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">Transport Desk Escalation Overhead</strong>
+                  Hundreds of hours spent by transport coordinators answering urgent driver calls and manually reassigning routes.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Transport supervisors forced to make panic phone calls to drivers and manual reassignments instead of optimizing operations.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-900 mb-1">
-                  <span>Female Employee Safety & Compliance Risk</span>
-                  <span className="font-mono text-slate-700">Zero-Tolerance Mandate</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] mt-1.5 shrink-0" />
+                <div>
+                  <strong className="text-[#f5f6f7] block">Female Employee Safety Compliance</strong>
+                  Late night breakdowns that trigger mandatory security escort protocols and zero-tolerance safety exposure.
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  Breakdowns during night shifts trigger emergency escort protocols and severe safety exposure that cannot be resolved with cash.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-teal-800 font-mono bg-teal-50/50 p-2.5 rounded-lg border border-teal-100">
-              <strong>Methodological Rigor:</strong> Velora does not arbitrarily fabricate rupee values for safety or reputation. We report hard monetary impact separately from operational risk.
-            </div>
+              </li>
+            </ul>
           </div>
 
         </div>

@@ -2,50 +2,159 @@
 
 @layer base {
   :root {
-    --background: #f8fafc;
-    --foreground: #0f172a;
-    --card: #ffffff;
-    --card-foreground: #0f172a;
-    --border: #e2e8f0;
-    --primary: #0f766e;
-    --primary-foreground: #ffffff;
-    --accent: #0284c7;
-    --muted: #64748b;
+    --bg: #000000;
+    --panel: #0a0a0a;
+    --panel-2: #0c0d0d;
+    --panel-green: #091510;
+    --border: #1e2022;
+    --border-soft: #161717;
+    --text: #f5f6f7;
+    --muted: #9aa0a6;
+    --muted-dim: #6b7075;
+    --green: #2fe583;
+    --green-dark: #18b866;
+    --green-soft: rgba(47, 229, 131, 0.10);
+    --green-soft-2: rgba(47, 229, 131, 0.16);
+    --green-line: rgba(47, 229, 131, 0.35);
+    --btn-text: #06170d;
   }
 
   html {
     scroll-behavior: smooth;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: var(--bg);
+    color: var(--text);
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: #000000;
+    color: #f5f6f7;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--green);
+    color: var(--btn-text);
   }
 
   /* Accessible focus indicators */
   *:focus-visible {
-    outline: 2px solid #0f766e;
+    outline: 2px solid var(--green);
     outline-offset: 2px;
   }
 }
 
-/* Subtle enterprise grid background pattern */
-.bg-grid-pattern {
+/* Custom Utilities matching exact reference */
+.bg-velora-panel {
+  background-color: var(--panel);
+}
+
+.bg-velora-panel-2 {
+  background-color: var(--panel-2);
+}
+
+.bg-velora-panel-green {
+  background-color: var(--panel-green);
+}
+
+.border-velora-border {
+  border-color: var(--border);
+}
+
+.border-velora-soft {
+  border-color: var(--border-soft);
+}
+
+.border-velora-green-line {
+  border-color: var(--green-line);
+}
+
+.text-velora-green {
+  color: var(--green);
+}
+
+.text-velora-muted {
+  color: var(--muted);
+}
+
+.text-velora-dim {
+  color: var(--muted-dim);
+}
+
+/* Glowing Elements */
+.glow-green-sm {
+  box-shadow: 0 0 10px rgba(47, 229, 131, 0.4);
+}
+
+.glow-green-md {
+  box-shadow: 0 0 20px rgba(47, 229, 131, 0.3);
+}
+
+.glow-green-lg {
+  box-shadow: 0 0 35px rgba(47, 229, 131, 0.25);
+}
+
+.glow-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -8px rgba(47, 229, 131, 0.55);
+}
+
+/* Reference Button */
+.btn-green-gradient {
+  background: linear-gradient(180deg, #2fe583, #18b866);
+  color: #06170d;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-green-gradient:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 24px -8px rgba(47, 229, 131, 0.65);
+}
+
+/* Background Grids & Radial Overlays */
+.bg-dark-grid {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+    linear-gradient(to right, rgba(30, 32, 34, 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 32, 34, 0.6) 1px, transparent 1px);
 }
 
-.bg-dot-pattern {
-  background-size: 24px 24px;
-  background-image: radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+.bg-radial-hero {
+  background: radial-gradient(circle at 50% 0%, rgba(47, 229, 131, 0.12) 0%, transparent 60%);
 }
 
-/* Tabular figures for financial and metric data */
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
+.bg-radial-band {
+  background: radial-gradient(600px 200px at 50% 0%, rgba(47, 229, 131, 0.12), transparent 70%);
+}
+
+/* Pulse Keyframes */
+@keyframes radar-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-radar {
+  animation: radar-pulse 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes signal-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.animate-signal {
+  stroke-dasharray: 4 4;
+  animation: signal-dash 1s linear infinite;
 }

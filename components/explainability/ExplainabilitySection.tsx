@@ -43,18 +43,20 @@ const ANATOMY_STEPS = [
 
 export function ExplainabilitySection() {
   return (
-    <section className="py-20 sm:py-24 bg-slate-50 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 sm:py-32 bg-black border-b border-[#161717]">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
         
-        {/* Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase mb-3">
-            08 • Algorithmic Integrity
+        {/* Head */}
+        <div className="text-center max-w-[680px] mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+            Algorithmic integrity
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            Every recommendation should be explainable.
+          <h2 className="text-[28px] sm:text-[38px] lg:text-[42px] font-bold tracking-tight text-[#f5f6f7] leading-[1.15]">
+            Every recommendation should be <br />
+            <span className="text-[#2fe583]">explainable.</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+          <p className="mt-4 text-[#9aa0a6] text-[16.5px] leading-relaxed">
             Enterprise transport operations cannot run on black-box predictions. Velora enforces an auditable 5-part anatomical standard for every proposed change.
           </p>
         </div>
@@ -64,30 +66,30 @@ export function ExplainabilitySection() {
           {ANATOMY_STEPS.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-2xs flex flex-col justify-between"
+              className="bg-[#0a0a0a] border border-[#1e2022] hover:border-[#2c2f31] rounded-[18px] p-5 transition-all flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                <div className="flex items-center justify-between mb-3 font-mono">
+                  <span className="text-xs font-bold text-[#2fe583] bg-[rgba(47,229,131,0.10)] px-2 py-0.5 rounded border border-[rgba(47,229,131,0.30)]">
                     PART {item.step}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase">
+                  <span className="text-[10px] text-[#6b7075] uppercase">
                     {item.label}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-slate-900 mb-1.5">
+                <h3 className="text-sm font-bold text-[#f5f6f7] mb-1.5">
                   {item.title}
                 </h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">
+                <p className="text-xs text-[#9aa0a6] leading-relaxed mb-4">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-100 bg-slate-50/60 -mx-5 -mb-5 p-3 rounded-b-2xl">
-                <span className="text-[9px] font-mono uppercase tracking-wider text-slate-400 block mb-0.5">
+              <div className="pt-3 border-t border-[#161717] bg-[#050605] -mx-5 -mb-5 p-3 rounded-b-[18px]">
+                <span className="text-[9px] font-mono uppercase tracking-wider text-[#6b7075] block mb-0.5">
                   Sample Standard
                 </span>
-                <span className="text-[11px] font-mono text-slate-700 block leading-normal">
+                <span className="text-[11px] font-mono text-[#8fe6ba] block leading-normal">
                   {item.example}
                 </span>
               </div>
@@ -96,20 +98,20 @@ export function ExplainabilitySection() {
         </div>
 
         {/* Guiding Principle Card */}
-        <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="bg-[#091510] border border-[rgba(47,229,131,0.35)] rounded-[22px] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_0_40px_rgba(47,229,131,0.06)]">
           <div className="space-y-1 text-center sm:text-left">
-            <span className="text-xs font-mono text-teal-400 uppercase tracking-widest">
+            <span className="text-xs font-mono text-[#2fe583] uppercase tracking-widest block mb-1">
               Core Technical Principle
             </span>
-            <div className="text-lg font-bold">
+            <div className="text-lg sm:text-xl font-bold font-mono text-[#f5f6f7]">
               Correctness + Explainability &gt; Novelty
             </div>
-            <p className="text-xs text-slate-400 max-w-xl">
+            <p className="text-xs text-[#9aa0a6] max-w-xl">
               We never obscure enterprise transport decisions behind proprietary buzzwords. Transport managers retain total transparent control over every policy lever and assumption.
             </p>
           </div>
 
-          <div className="shrink-0 font-mono text-xs text-slate-300 bg-slate-800/80 px-4 py-2.5 rounded-xl border border-slate-700">
+          <div className="shrink-0 font-mono text-xs text-[#2fe583] bg-black/80 px-4 py-2.5 rounded-full border border-[rgba(47,229,131,0.35)]">
             Zero Black-Box Logic
           </div>
         </div>

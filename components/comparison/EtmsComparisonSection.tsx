@@ -1,119 +1,229 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ETMS_COMPARISON, SAVINGS_TIERS } from "@/lib/data";
-import { Layers, ShieldCheck, Check, ArrowRight, AlertCircle } from "lucide-react";
+import { Check, ArrowRight, ShieldCheck, Database, FileSpreadsheet, Scale, CalendarDays } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function EtmsComparisonSection() {
+  const [activeSchema, setActiveSchema] = useState<"trip" | "audit">("trip");
+
   return (
-    <section id="etms-comparison" className="py-20 sm:py-28 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="etms-comparison" className="py-24 sm:py-32 bg-black border-b border-[#161717]">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase mb-3">
-            09 • Architectural Positioning
+        {/* Split Section: Works with what you already run */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center mb-24">
+          
+          {/* Left Text & Stack List */}
+          <div className="lg:col-span-6">
+            <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+              Vendor-neutral by design
+            </div>
+
+            <h2 className="text-[26px] sm:text-[34px] font-bold tracking-tight text-[#f5f6f7] leading-[1.3] mb-4">
+              Works with what you <span className="text-[#2fe583]">already run.</span>
+            </h2>
+
+            <p className="text-[16px] text-[#9aa0a6] leading-relaxed mb-8">
+              Velora is not another ETMS. It sits above your existing systems and vendors, ingesting the exports and access you&apos;re already able to share — no incumbent API access required, no rip-and-replace.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[10px] p-4 flex gap-3 items-start">
+                <div className="w-8 h-8 rounded-lg bg-[rgba(47,229,131,0.10)] flex items-center justify-center shrink-0 text-[#2fe583]">
+                  <Database className="w-4 h-4" />
+                </div>
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#f5f6f7] mb-0.5">ETMS &amp; GPS</h5>
+                  <p className="text-[12px] text-[#9aa0a6]">MoveInSync, Routematic, internal tools</p>
+                </div>
+              </div>
+
+              <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[10px] p-4 flex gap-3 items-start">
+                <div className="w-8 h-8 rounded-lg bg-[rgba(47,229,131,0.10)] flex items-center justify-center shrink-0 text-[#2fe583]">
+                  <FileSpreadsheet className="w-4 h-4" />
+                </div>
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#f5f6f7] mb-0.5">Finance systems</h5>
+                  <p className="text-[12px] text-[#9aa0a6]">Invoices, rate cards, contracts</p>
+                </div>
+              </div>
+
+              <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[10px] p-4 flex gap-3 items-start">
+                <div className="w-8 h-8 rounded-lg bg-[rgba(47,229,131,0.10)] flex items-center justify-center shrink-0 text-[#2fe583]">
+                  <CalendarDays className="w-4 h-4" />
+                </div>
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#f5f6f7] mb-0.5">HR systems</h5>
+                  <p className="text-[12px] text-[#9aa0a6]">Rosters, shifts, employee data</p>
+                </div>
+              </div>
+
+              <div className="bg-[#0a0a0a] border border-[#1e2022] rounded-[10px] p-4 flex gap-3 items-start">
+                <div className="w-8 h-8 rounded-lg bg-[rgba(47,229,131,0.10)] flex items-center justify-center shrink-0 text-[#2fe583]">
+                  <Scale className="w-4 h-4" />
+                </div>
+                <div>
+                  <h5 className="text-[14px] font-bold text-[#f5f6f7] mb-0.5">Vendor contracts</h5>
+                  <p className="text-[12px] text-[#9aa0a6]">SLAs, rate structures</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            Not another transport management system.
-          </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Velora does not replace your daily dispatcher or driver application. We sit as an independent analytical layer across your existing ETMS, GPS providers, and vendor contracts.
-          </p>
+
+          {/* Right Code Card from Reference */}
+          <div className="lg:col-span-6">
+            <div className="bg-[#091510] border border-[rgba(47,229,131,0.35)] rounded-[22px] p-6 shadow-[0_0_35px_rgba(47,229,131,0.06)]">
+              <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-[rgba(47,229,131,0.2)]">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-black border border-[#1e2022] flex items-center justify-center text-[#2fe583]">
+                    <span className="font-mono text-xs font-bold">&gt;_</span>
+                  </div>
+                  <div>
+                    <h4 className="text-[15px] font-bold text-[#f5f6f7]">Normalized trip record</h4>
+                    <span className="text-[12px] text-[#9aa0a6]">One unified schema across any source</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-1.5 font-mono text-[10px]">
+                  <button
+                    onClick={() => setActiveSchema("trip")}
+                    className={cn(
+                      "px-2.5 py-1 rounded-md transition",
+                      activeSchema === "trip" ? "bg-[#2fe583] text-[#06170d] font-bold" : "text-[#9aa0a6] bg-[#050605]"
+                    )}
+                  >
+                    Trip JSON
+                  </button>
+                  <button
+                    onClick={() => setActiveSchema("audit")}
+                    className={cn(
+                      "px-2.5 py-1 rounded-md transition",
+                      activeSchema === "audit" ? "bg-[#2fe583] text-[#06170d] font-bold" : "text-[#9aa0a6] bg-[#050605]"
+                    )}
+                  >
+                    Anomaly Audit
+                  </button>
+                </div>
+              </div>
+
+              {/* Code block */}
+              <div className="bg-[#050605] border border-[#1e2022] rounded-[10px] p-4 text-[12.5px] font-mono leading-[1.7] text-[#8fe6ba] overflow-x-auto shadow-inner">
+                {activeSchema === "trip" ? (
+                  <pre className="whitespace-pre">
+{`{
+  `}<span className="text-[#2fe583]">&quot;trip_id&quot;</span>{`: `}<span className="text-white">&quot;TRP-88421&quot;</span>{`,
+  `}<span className="text-[#2fe583]">&quot;vendor&quot;</span>{`: `}<span className="text-white">&quot;Vendor C&quot;</span>{`,
+  `}<span className="text-[#2fe583]">&quot;route&quot;</span>{`: `}<span className="text-white">&quot;Whitefield – ORR&quot;</span>{`,
+  `}<span className="text-[#2fe583]">&quot;occupancy&quot;</span>{`: `}<span className="text-[#2fe583]">0.41</span>{`,
+  `}<span className="text-[#2fe583]">&quot;billed_km&quot;</span>{`: `}<span className="text-[#2fe583]">38.2</span>{`,
+  `}<span className="text-[#2fe583]">&quot;anomaly_flag&quot;</span>{`: `}<span className="text-[#2fe583]">&quot;excess_km&quot;</span>{`
+}`}
+                  </pre>
+                ) : (
+                  <pre className="whitespace-pre">
+{`{
+  `}<span className="text-[#2fe583]">&quot;audit_case&quot;</span>{`: `}<span className="text-white">&quot;DISP-9921&quot;</span>{`,
+  `}<span className="text-[#2fe583]">&quot;gps_odometer&quot;</span>{`: `}<span className="text-[#2fe583]">24.8</span>{`,
+  `}<span className="text-[#2fe583]">&quot;invoice_billed&quot;</span>{`: `}<span className="text-[#fb7185]">38.2</span>{`,
+  `}<span className="text-[#2fe583]">&quot;variance_loss&quot;</span>{`: `}<span className="text-[#fb7185]">&quot;₹696.80&quot;</span>{`,
+  `}<span className="text-[#2fe583]">&quot;action&quot;</span>{`: `}<span className="text-[#2fe583]">&quot;auto_deduct_settlement&quot;</span>{`
+}`}
+                  </pre>
+                )}
+              </div>
+
+              {/* Stack grid */}
+              <div className="grid grid-cols-2 gap-3.5 mt-4">
+                <div className="bg-[#050605] border border-[#1e2022] rounded-[10px] p-3 text-center">
+                  <strong className="block text-[14px] text-[#2fe583] font-mono">Exports-based</strong>
+                  <span className="text-[11px] text-[#6b7075]">No forced API access</span>
+                </div>
+                <div className="bg-[#050605] border border-[#1e2022] rounded-[10px] p-3 text-center">
+                  <strong className="block text-[14px] text-[#2fe583] font-mono">Vendor-neutral</strong>
+                  <span className="text-[11px] text-[#6b7075]">Works across contracts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        {/* Side-by-Side Comparison Table */}
-        <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-2xs mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-12 bg-slate-900 text-white p-4 sm:p-5 text-xs font-mono font-bold uppercase tracking-wider">
-            <div className="md:col-span-3 text-slate-400">Core Capability</div>
-            <div className="md:col-span-4 text-slate-300">Existing Mobility Stack (ETMS)</div>
-            <div className="md:col-span-5 text-teal-400">Velora Intelligence Layer</div>
+        {/* Comparison Matrix Table */}
+        <div className="border border-[#1e2022] rounded-[22px] overflow-hidden mb-20 bg-[#0a0a0a]">
+          <div className="grid grid-cols-1 md:grid-cols-12 bg-[#0c0d0d] p-4 sm:p-5 text-xs font-mono font-bold uppercase tracking-wider border-b border-[#1e2022]">
+            <div className="md:col-span-3 text-[#6b7075]">Capability</div>
+            <div className="md:col-span-4 text-[#9aa0a6]">Existing Mobility Stack (ETMS)</div>
+            <div className="md:col-span-5 text-[#2fe583]">Velora Intelligence Layer</div>
           </div>
 
-          <div className="divide-y divide-slate-200 bg-white text-xs sm:text-sm">
+          <div className="divide-y divide-[#1e2022] text-xs sm:text-sm">
             {ETMS_COMPARISON.map((row, idx) => (
               <div
                 key={idx}
-                className="grid grid-cols-1 md:grid-cols-12 p-4 sm:p-5 gap-2 md:gap-4 items-start hover:bg-slate-50/70 transition-colors"
+                className="grid grid-cols-1 md:grid-cols-12 p-4 sm:p-5 gap-2 md:gap-4 items-start hover:bg-[#0f1011] transition-colors"
               >
-                <div className="md:col-span-3 font-semibold text-slate-900 font-mono text-xs">
+                <div className="md:col-span-3 font-semibold text-[#f5f6f7] font-mono text-xs">
                   {row.capability}
                 </div>
-                <div className="md:col-span-4 text-slate-600 leading-relaxed">
-                  <span className="md:hidden font-mono text-[10px] text-slate-400 uppercase block mb-0.5">
-                    Existing ETMS:
-                  </span>
+                <div className="md:col-span-4 text-[#9aa0a6] leading-relaxed">
                   {row.etms}
                 </div>
-                <div className="md:col-span-5 text-slate-900 font-medium leading-relaxed flex items-start gap-2">
-                  <span className="md:hidden font-mono text-[10px] text-teal-700 uppercase block mb-0.5">
-                    Velora Layer:
-                  </span>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-teal-700 shrink-0 mt-0.5" />
-                    <span>{row.velora}</span>
-                  </div>
+                <div className="md:col-span-5 text-[#f5f6f7] font-medium leading-relaxed flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#2fe583] shrink-0 mt-0.5" />
+                  <span>{row.velora}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 11: Savings Framework */}
-        <div className="pt-10 border-t border-slate-100">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase block mb-2">
-              10 • Value Realization Taxonomy
+        {/* Three Tiers of Savings */}
+        <div className="pt-8 border-t border-[#1e2022]">
+          <div className="text-center max-w-[680px] mx-auto mb-12">
+            <span className="text-xs font-mono font-bold tracking-widest text-[#6b7075] uppercase block mb-2">
+              Value Realization
             </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#f5f6f7]">
               The Three Tiers of Enterprise Savings
             </h3>
-            <p className="text-sm text-slate-600 mt-2">
-              We never promise inflated or unverified theoretical savings. Velora explicitly distinguishes raw mathematical opportunities from operationally feasible and bankable bottom-line recovery.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {SAVINGS_TIERS.map((tier, idx) => (
               <div
                 key={idx}
-                className="bg-slate-50/70 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between"
+                className="bg-[#0a0a0a] border border-[#1e2022] rounded-[18px] p-6 flex flex-col justify-between hover:border-[#2c2f31] transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono font-bold text-slate-400">
+                    <span className="text-xs font-mono font-bold text-[#6b7075]">
                       TIER 0{idx + 1}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-700 uppercase">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[rgba(47,229,131,0.10)] border border-[rgba(47,229,131,0.30)] text-[#2fe583] uppercase">
                       {tier.badge}
                     </span>
                   </div>
 
-                  <h4 className="text-base font-bold text-slate-900 tracking-tight mb-1">
+                  <h4 className="text-base font-bold text-[#f5f6f7] mb-1">
                     {tier.name}
                   </h4>
-                  <div className="text-xs font-semibold text-teal-800 mb-3 font-mono">
+                  <div className="text-xs font-mono text-[#2fe583] mb-3">
                     {tier.tagline}
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                  <p className="text-xs text-[#9aa0a6] leading-relaxed mb-6">
                     {tier.desc}
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white border border-slate-200 text-[11px] font-mono text-slate-600">
-                  <span className="text-slate-400 block text-[9px] uppercase">Concrete Example</span>
+                <div className="p-3 rounded-lg bg-[#050605] border border-[#1e2022] text-[11px] font-mono text-[#8fe6ba]">
+                  <span className="text-[#6b7075] block text-[9px] uppercase">Example</span>
                   {tier.example}
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* Savings Disclaimer Note */}
-          <div className="mt-8 p-4 rounded-xl bg-slate-100/80 border border-slate-200 text-slate-600 text-xs flex items-start gap-2.5 max-w-3xl">
-            <AlertCircle className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
-            <div className="leading-relaxed">
-              <strong>Enterprise Transparency:</strong> Velora does not make sweeping claims of guaranteed savings. All operational savings depend on the enterprise&apos;s current contract terms, route densities, and execution compliance.
-            </div>
           </div>
         </div>
 

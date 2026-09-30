@@ -1,184 +1,137 @@
 "use client";
 
 import React, { useState } from "react";
-import { RECOMMENDATIONS, Recommendation } from "@/lib/data";
-import { StatusBadge } from "@/components/ui/StatusBadge";
-import { 
-  CheckCircle2, 
-  ChevronDown, 
-  ChevronUp, 
-  Coins, 
-  ArrowUpRight, 
-  ShieldCheck, 
-  FileText,
-  Sliders,
-  Scale
-} from "lucide-react";
+import { ChevronDown, ChevronUp, ShieldCheck, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function DecisionEngineSection() {
-  const [expandedId, setExpandedId] = useState<string>(RECOMMENDATIONS[0].id);
+const SLIPS = [
+  {
+    id: "slip-1",
+    tag: "Example — Route consolidation",
+    title: "Consolidate 17 low-occupancy routes",
+    figLabel: "Potential annual opportunity",
+    figValue: "₹31.4L",
+    k: "Evidence",
+    featured: true,
+    items: [
+      "Occupancy below threshold (<35% over 90 days)",
+      "Overlapping pickup corridors (78% spatial overlap)",
+      "Sufficient capacity in contracted 26-seaters",
+      "SLA-compatible consolidation with zero female drop safety compromise",
+    ],
+  },
+  {
+    id: "slip-2",
+    tag: "Example — Vendor reallocation",
+    title: "Shift late-night capacity from Vendor A to Vendor B",
+    figLabel: "Direction",
+    figValue: "Reliability ↑",
+    k: "Expected",
+    featured: false,
+    items: [
+      "Lower effective true cost (-₹48 / trip)",
+      "Improved reliability (Vendor B 99.1% vs Vendor A 91.4%)",
+      "Reduced emergency-replacement exposure (84% fewer escalations)",
+    ],
+  },
+  {
+    id: "slip-3",
+    tag: "Example — Invoice anomaly",
+    title: "Investigate Vendor C invoice anomalies",
+    figLabel: "Status",
+    figValue: "Flagged",
+    k: "Detected",
+    featured: false,
+    items: [
+      "43 duplicate trip claims identified across 3 campus gates",
+      "Excess billed kilometres (14.2% discrepancy vs GPS telemetry)",
+      "Inconsistent vehicle category (billed Innova, dispatched Dzire)",
+    ],
+  },
+];
 
-  const toggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? "" : id);
-  };
+export function DecisionEngineSection() {
+  const [expandedId, setExpandedId] = useState<string | null>("slip-1");
 
   return (
-    <section id="decision-engine" className="py-20 sm:py-28 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="decision-engine" className="py-24 sm:py-32 bg-black border-b border-[#161717]">
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
-              07 • Decision Engine
-            </span>
-            <StatusBadge status="ILLUSTRATIVE EXAMPLE" size="sm" />
+        {/* Head */}
+        <div className="text-center max-w-[680px] mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 border border-[#1e2022] bg-[#0a0a0a] px-4 py-2 rounded-full text-[12.5px] text-[#9aa0a6] font-medium mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_8px_#2fe583]" />
+            The decision engine
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight mb-4">
-            Don&apos;t stop at the diagnosis. <br />
-            <span className="text-teal-800">Decide what changes next.</span>
+          <h2 className="text-[28px] sm:text-[38px] lg:text-[42px] font-bold tracking-tight text-[#f5f6f7] leading-[1.15]">
+            Not &ldquo;AI-powered recommendations.&rdquo; <br />
+            <span className="text-[#2fe583]">Specific ones.</span>
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Velora bridges the gap between passive reporting and operational action. Every finding is translated into an actionable, evidence-backed decision card engineered for transport managers and procurement heads.
+          <p className="mt-4 text-[#9aa0a6] text-[16.5px] leading-relaxed">
+            Illustrative examples of the kind of finding Velora is built to surface — each with the evidence behind it, not just a conclusion.
           </p>
         </div>
 
-        {/* 3 Concrete Recommendation Cards */}
-        <div className="space-y-6 mb-16">
-          {RECOMMENDATIONS.map((rec) => {
-            const isExpanded = expandedId === rec.id;
+        {/* Slips Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-16">
+          {SLIPS.map((slip) => {
+            const isFeatured = slip.featured;
             return (
               <div
-                key={rec.id}
+                key={slip.id}
                 className={cn(
-                  "rounded-2xl border transition-all duration-200 overflow-hidden",
-                  isExpanded
-                    ? "bg-white border-slate-900 shadow-md ring-1 ring-slate-900"
-                    : "bg-slate-50/70 border-slate-200 hover:border-slate-300"
+                  "bg-[#0a0a0a] rounded-[22px] overflow-hidden flex flex-col justify-between border transition-all duration-200 group",
+                  isFeatured
+                    ? "border-[rgba(47,229,131,0.35)] shadow-[0_0_35px_rgba(47,229,131,0.06)]"
+                    : "border-[#1e2022] hover:border-[#2c2f31]"
                 )}
               >
-                {/* Header Bar */}
-                <div
-                  onClick={() => toggleExpand(rec.id)}
-                  className="p-6 sm:p-7 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 select-none"
-                >
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      <StatusBadge status={rec.badge} size="sm" />
-                      <span className="text-xs font-mono text-slate-500 uppercase">
-                        {rec.category}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                      {rec.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl">
-                      {rec.summary}
-                    </p>
+                <div>
+                  <div className="text-[10.5px] font-bold tracking-[0.06em] uppercase text-[#6b7075] px-6 pt-5 pb-1">
+                    {slip.tag}
                   </div>
 
-                  <div className="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-2 md:pt-0 border-t md:border-0 border-slate-100">
-                    <div className="text-left md:text-right">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
-                        Annual Opportunity
-                      </span>
-                      <span className="text-2xl font-black font-mono text-teal-800 tracking-tight">
-                        {rec.annualOpportunity}
-                      </span>
-                    </div>
+                  <h3 className="text-[17px] font-bold text-[#f5f6f7] px-6 py-2 pb-5 leading-[1.4]">
+                    {slip.title}
+                  </h3>
 
-                    <button
-                      type="button"
-                      aria-label="Toggle details"
-                      className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shrink-0"
-                    >
-                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
+                  {/* Figure Box */}
+                  <div className="mx-6 p-4 rounded-[10px] bg-[rgba(47,229,131,0.10)] border border-[rgba(47,229,131,0.35)] flex items-center justify-between">
+                    <span className="text-[12.5px] text-[#9aa0a6]">{slip.figLabel}</span>
+                    <strong className="text-[19px] font-extrabold text-[#2fe583] font-mono">
+                      {slip.figValue}
+                    </strong>
+                  </div>
+
+                  {/* Body with glowing green dots */}
+                  <div className="p-6">
+                    <div className="text-[11px] font-mono tracking-[0.06em] uppercase text-[#6b7075] font-bold mb-3">
+                      {slip.k}
+                    </div>
+                    <ul className="space-y-2.5">
+                      {slip.items.map((item, idx) => (
+                        <li key={idx} className="text-[13.5px] text-[#9aa0a6] pl-4 relative leading-relaxed">
+                          <span className="absolute left-0 top-[8px] w-1.5 h-1.5 rounded-full bg-[#2fe583] shadow-[0_0_5px_#2fe583]" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                {/* Expanded Anatomical Detail Section */}
-                {isExpanded && (
-                  <div className="px-6 pb-7 pt-2 border-t border-slate-100 bg-slate-50/50">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 mb-6">
-                      
-                      {/* Evidence Box */}
-                      <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
-                        <span className="text-xs font-mono font-bold text-teal-800 uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-teal-600" />
-                          Observed Evidence
-                        </span>
-                        <ul className="space-y-2 text-xs text-slate-600 leading-relaxed">
-                          {rec.evidence.map((ev, i) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                              <span>{ev}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Assumptions Box */}
-                      <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
-                        <span className="text-xs font-mono font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
-                          <Sliders className="w-3.5 h-3.5 text-slate-500" />
-                          Tested Assumptions
-                        </span>
-                        <ul className="space-y-2 text-xs text-slate-600 leading-relaxed">
-                          {rec.assumptions.map((as, i) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                              <span>{as}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Constraints Box */}
-                      <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
-                        <span className="text-xs font-mono font-bold text-amber-800 uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
-                          <Scale className="w-3.5 h-3.5 text-amber-600" />
-                          Operational Constraints
-                        </span>
-                        <ul className="space-y-2 text-xs text-slate-600 leading-relaxed">
-                          {rec.constraints.map((cn, i) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                              <span>{cn}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                    </div>
-
-                    {/* Bottom Expected Impact Strip */}
-                    <div className="p-4 rounded-xl bg-teal-50 border border-teal-200 text-teal-950 text-xs sm:text-sm font-medium flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0 mt-0.5" />
-                      <div>
-                        <strong className="font-semibold text-teal-900 block font-mono text-xs uppercase mb-0.5">
-                          Expected Verified Impact:
-                        </strong>
-                        {rec.expectedImpact}
-                      </div>
-                    </div>
-                  </div>
-                )}
+                <div className="px-6 pb-5 pt-2 border-t border-[#161717] text-[11px] font-mono text-[#6b7075] flex items-center justify-between">
+                  <span>Illustrative Example</span>
+                  <span className="text-[#2fe583]">Auditable</span>
+                </div>
               </div>
             );
           })}
         </div>
 
-        {/* Closing Principle Banner */}
-        <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center max-w-3xl mx-auto">
-          <p className="text-sm font-semibold text-slate-900 leading-relaxed">
-            &ldquo;Velora does not stop at reporting what happened. It recommends what should happen next.&rdquo;
-          </p>
-          <span className="text-xs text-slate-500 font-mono mt-1 block">
-            Evidence over hype • Economics over vanity metrics • Explainability over novelty
-          </span>
+        {/* Decision Close Banner */}
+        <div className="text-center pt-8 text-[20px] sm:text-[26px] font-bold max-w-[760px] mx-auto leading-[1.45]">
+          <span className="text-[#6b7075]">Velora does not stop at reporting what happened.</span><br />
+          <span className="text-[#f5f6f7]">It recommends what should happen next.</span>
         </div>
 
       </div>
